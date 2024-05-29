@@ -10,7 +10,7 @@ export function HomeV() {
 
   const pesquisar = async () => {
     try {
-      const resultados = await buscarVideos(pesquisa);
+      const resultados = await buscarVideosVimeo(pesquisa);
       setVideos(resultados);
       setPesquisaRealizada(true);
     } catch (erro) {
@@ -38,24 +38,20 @@ export function HomeV() {
       {pesquisaRealizada ? (
         <ScrollView style={estilos.scrollView}>
           {videos.map(video => (
-            <View key={video.id.videoId} style={estilos.containerVideo}>
-              <Text style={estilos.tituloVideo}>{video.snippet.title}</Text>
-              <Image
-                style={estilos.thumbnail}
-                source={{ uri: video.snippet.thumbnails.high.url }} // Usar a thumbnail de alta qualidade
-              />
+            <View key={video.uri} style={estilos.containerVideo}>
+              <Text style={estilos.tituloVideo}>{video.name}</Text>
               <WebView
                 style={estilos.webview}
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
-                source={{ html: `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allowfullscreen></iframe>` }}
+                source={{ html: `<iframe width="100%" height="100%" src="https://player.vimeo.com/video/${video.uri.split('/').pop()}" frameborder="0" allowfullscreen></iframe>` }}
               />
             </View>
           ))}
         </ScrollView>
       ) : (
         <View style={estilos.containerTexto}>
-          <Text style={estilos.texto}>Pesquise acima para encontrar vídeos do YouTube.</Text>
+          <Text style={estilos.texto}>Pesquise acima para encontrar vídeos do Vimeo.</Text>
         </View>
       )}
     </KeyboardAvoidingView>
@@ -72,17 +68,17 @@ const estilos = StyleSheet.create({
   subtitulo: {
     color: '#1AB7EA',
   },
-  containerTexto:{
-    justifyContent:'center',
-   alignItems:'center',
-   padding:50
- },
- texto:{
-  fontSize:22,
-  fontWeight:'400',
-  textAlign:'center'
+  containerTexto: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 50
+  },
+  texto: {
+    fontSize: 22,
+    fontWeight: '400',
+    textAlign: 'center'
 
-},
+  },
   containerPesquisa: {
     flexDirection: 'row',
     alignItems: 'center',
