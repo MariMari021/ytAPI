@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const VIMEO_API_KEY = '75cd5ccf00e5dca8d3fb627dccdae26f'; 
+const VIMEO_API_KEY = ''; 
 
 export const buscarVideosVimeo = async (query) => {
   const response = await axios.get('https://api.vimeo.com/videos', {
